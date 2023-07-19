@@ -1,0 +1,16 @@
+Possible APIs for the final project
+
+ACCOUNT
+1. User Registration
+2. User Login
+3. Account Activation
+4. User Profile Create and Update
+
+
+Core
+1. Job List API
+2. Job Create
+3. Job Update
+4. Job Apply
+5. View Applied Jobs
+6. Contact Create and List API

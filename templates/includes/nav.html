@@ -1,5 +1,4 @@
 {% load static %}
-
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
@@ -10,22 +9,21 @@
             <img src="{% static 'core/nexus.png' %}" style="height: 40px; width: 140px">
         </a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 50px">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categories
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+            <ul class="navbar-nav nav-tabs me-auto mb-2 mb-lg-0" style="margin-left: 50px">
+                <li class="nav-item" style="margin-left: 20px">
+                    <a class="nav-link {{ home_active }}" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item" style="margin-left: 20px">
-                    <a class="nav-link" href="#">FAQs</a>
+                    <a class="nav-link {{ faqs_active }}" href="#">FAQs</a>
                 </li>
+                <li class="nav-item" style="margin-left: 20px">
+                    <a class="nav-link {{ contact_active }}" href="{% url 'contact' %}">Contact Us</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item" style="margin-left: 20px">
+                        <a class="nav-link {{ my_jobs_active }}" href="{% url 'my_job' %}">My Jobs</a>
+                    </li>
+                {% endif %}
             </ul>
             {% if not request.user.is_authenticated %}
                 <div>
@@ -38,16 +36,18 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ request.user.email }}
                         {% if request.user.userprofile.profile_picture %}
-                            <img src="{{ request.user.userprofile.profile_picture.url }}" style="height: 40px; width: 40px; border-radius: 50%">
+                            <img src="{{ request.user.userprofile.profile_picture.url }}"
+                                 style="height: 40px; width: 40px; border-radius: 50%">
                         {% else %}
                             <img src="{% static 'account/dummy.png' %}" style="height: 40px; width: 40px">
                         {% endif %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarProfileDropdown">
-                        <a class="dropdown-item" href="{% url 'user_logout' %}">Logout</a>
                         <a class="dropdown-item" href="{% url 'user_profile' %}">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'user_logout' %}">Logout</a>
                     </div>
                 </div>
+
             {% endif %}
         </div>
     </div>

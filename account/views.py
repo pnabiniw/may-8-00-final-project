@@ -7,7 +7,7 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib import messages
 
 from commons.decorators import redirect_to_home_if_authenticated
-from commons.utils import send_account_activation_mail
+from commons.utils import send_account_activation_mail, is_profile_complete
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 from .models import UserAccountActivationKey, User, UserProfile
 
@@ -84,6 +84,7 @@ class UserProfileView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "User Profile"
+        context['is_profile_complete'] = is_profile_complete(self.request.user)
         return context
 
 
@@ -113,6 +114,8 @@ class UserProfileUpdateView(CreateView):
             messages.success(request, "Your Profile Has Been Updated !!")
             return redirect('user_profile')
         else:
-            print(form.errors.get_json_data())
-            messages.error(request, form.errors.as_text())
+            error_dict = form.errors.get_json_data()
+            error_dict_values = list(error_dict.values())
+            error_messg = error_dict_values[0][0].get("message")
+            messages.error(request, error_messg)
             return self.form_invalid(form)

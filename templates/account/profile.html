@@ -52,14 +52,21 @@
                         -
                     {% endif %}
                 </p>
-                <p><b>Status</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <p><b>Account Status</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     {% if request.user.account_activated %}
                         Active
                     {% else %}
                         Inactive
                     {% endif %}
                 </p>
-            <a href="{% url 'user_profile_update' %}" class="btn btn-outline-success">Edit Profile</a>
+                <p><b>Profile Status</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    {% if is_profile_complete %}
+                        Complete
+                    {% else %}
+                        Incomplete
+                    {% endif %}
+                </p>
+                <a href="{% url 'user_profile_update' %}" class="btn btn-outline-success">Edit Profile</a>
             </div>
         </div>
     </div>
